@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfgmap-{{ .Chart.Name }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+data:
+  tenant_id: {{ required "missing tenant_id" .Values.tenant_id }}
+  client_id: {{ required "missing client_id" .Values.client_id }}
+  secret: {{ required "missing secret" .Values.secret }}
+  appid_url: {{ required "missing appid_url" .Values.appid_url }}

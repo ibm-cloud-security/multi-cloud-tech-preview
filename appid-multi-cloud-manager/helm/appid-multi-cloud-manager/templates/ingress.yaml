@@ -1,0 +1,20 @@
+{{ if eq .Values.withIngress true }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-{{ .Chart.Name }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.ingress_host }}
+    secretName: {{ .Values.tls_cert_secret_name }}
+  rules:
+    - host: {{ .Values.ingress_host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: svc-{{ .Chart.Name }}-{{ .Release.Name }}
+              servicePort: 3001
+  {{ end }}

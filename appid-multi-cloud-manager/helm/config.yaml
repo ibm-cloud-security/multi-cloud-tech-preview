@@ -1,0 +1,9 @@
+ingress_host: <ingress host name>
+tls_cert_secret_name: <tls secret name>
+
+tenant_id: "<App ID Tenant ID>"
+client_id: "<App ID Client ID>"
+secret: "<App ID Secret>"
+appid_url: "<App Oauth Server Url>"
+
+withIngress: true

@@ -1,0 +1,12 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get {{ .Release.Name }}
+
+You can easily connect to the remote instance from your browser. Forward the webserver port to localhost:3001
+
+- kubectl port-forward --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l app=multi-cloud-identity-and-access-policy-manager -o jsonpath='{ .items[0].metadata.name }') 3001

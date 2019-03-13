@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dpl-hello-world-backend
+  namespace: multi-cloud-tech-preview
+  labels:
+    app: hello-world-backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world-backend
+    spec:
+      containers:
+      - name: hello-world-backend
+        image: ibmcloudsecurity/multi-cloud-tech-preview-hello-world-backend:latest
+        ports:
+        - containerPort: 8000
+
