@@ -4,7 +4,7 @@ import Logger from 'utils/logger/logger';
 import switchOffImg from 'img/switch-off.png';
 import switchOnImg from 'img/switch-on.png';
 
-let logger = Logger.getLoggerWithLevel("ServicesRow", Logger.TRACE);
+let logger = Logger.getLoggerWithLevel("ServicesRow", Logger.DEBUG);
 
 class ServicesRow extends Component {
     constructor(props) {
