@@ -51,9 +51,9 @@ app.get('/', webAppStrategyMiddleware(API_SERVICE_URL, `${PUBLIC_WEB_URL}${LOGIN
 		case 200:
 			return res.send({ msg: `Hello ${name}`, userInfo: response.body });
 		case 401:
-			return res.send({ msg: `Hello ${name}`, error: 'Unauthorized' });
+			return res.send({ msg: `Hello ${name}`, backendResponse: 'Unauthorized' });
 		case 404:
-			return res.send({ msg: `Hello ${name}`, error: 'User not found' });
+			return res.send({ msg: `Hello ${name}`, backendResponse: 'User not found' });
 		case 500:
 			return res.send({ error: 'Error contacting backend' });
 		default:

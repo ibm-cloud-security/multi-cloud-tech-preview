@@ -6,12 +6,12 @@ const logger = log4js.getLogger('backend-manager');
 logger.level = process.env['LOG_LEVEL'] || 'trace';
 const backend_url = config.getBackendUrl();
 
-const getUserInfo = async (accessToken, idToken) => {
+const getUserInfo = async (accessToken) => {
 	try {
 		const options = {
 			method: 'GET',
 			uri: `${backend_url}/api/user/data`,
-			headers: { authorization: accessToken ? `Bearer ${accessToken} ${idToken}` : null },
+			headers: { authorization: accessToken ? `Bearer ${accessToken}` : null },
 			resolveWithFullResponse: true,
 			simple: false,
 			json: true
