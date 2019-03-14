@@ -24,7 +24,7 @@ const webAppStrategyMiddleware = (apiServiceUrl, redirectUrl) => {
 
             if (response.statusCode !== 401 && response.statusCode !== 200) {
                 logger.error('Unexpected Response from is protected', { status: response.statusCode, body: response.body });
-                return res.render('pages/error', { error: 'Received un unexpected response' })
+                return res.send({ error: 'Received un unexpected response', req: { status: response.statusCode, body: response.body } })
             }
 
             // If Istio rejects the access token - manually trigger a login
@@ -37,7 +37,7 @@ const webAppStrategyMiddleware = (apiServiceUrl, redirectUrl) => {
 
         } catch (e) {
             logger.error('An error occurred processing the request', e);
-            return res.render('pages/error', { error: 'An error occurred processing the request' })
+            return res.send({ error: 'An error occurred processing the request', ...e })
         }
     }
 };

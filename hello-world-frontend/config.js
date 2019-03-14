@@ -9,7 +9,7 @@ const tenantId = process.env.TENANT_ID;
 const clientId = process.env.CLIENT_ID;
 const secret = process.env.SECRET;
 const oauthServerUrl = process.env.APPID_URL;
-const api_service_url = (process.env.SVC_HELLO_WORLD_FRONTEND_SERVICE_HOST ? `http://${process.env.SVC_HELLO_WORLD_FRONTEND_SERVICE_HOST}:3000` : 'http://localhost:3000').trim();
+const api_service_url = (process.env.SVC_HELLO_WORLD_API_SERVICE_HOST ? `http://svc-hello-world-api:3000` : 'http://localhost:3000').trim();
 const public_web_url = (process.env.public_web_url || 'http://localhost:3000').trim();
 const backend_url = (process.env.backend_url || 'http://localhost:8000').trim();
 
