@@ -40,8 +40,9 @@ async function getAllClusters(req, res, next) {
         const protectedServices = await databaseClient.get(PROTECTED_SERVICES_PREFIX + cluster.guid) || {};
 
         for (var serviceName in cluster.services) {
-            cluster.services[serviceName].protectionEnabled = protectedServices[serviceName] === true;
+            cluster.services[serviceName].protectionEnabled = (protectedServices[serviceName] && protectedServices[serviceName].protectionEnabled) === true;
         }
+        logger.trace('cluster', cluster)
         clustersArray.push(cluster);
     }
 
@@ -59,9 +60,9 @@ async function getCluster(req, res, next) {
     }
 
     const protectedServices = await databaseClient.get(PROTECTED_SERVICES_PREFIX + cluster.guid) || {};
-    console.log("protected", protectedServices);
+
     for (var serviceName in cluster.services) {
-        cluster.services[serviceName].protectionEnabled = protectedServices[serviceName] === true;;
+        cluster.services[serviceName].protectionEnabled = (protectedServices[serviceName] && protectedServices[serviceName].protectionEnabled) === true;
     }
 
     logger.trace("<< getCluster :: 200 OK");
@@ -70,10 +71,11 @@ async function getCluster(req, res, next) {
 
 async function setPolicy(req, res, next) {
     logger.trace(">> setPolicy :: ", req.params.id, JSON.stringify(req.body));
-    await databaseClient.set(PROTECTED_SERVICES_PREFIX + req.params.id, {
-        serviceName: req.body.serviceName,
+    const policies = (await databaseClient.get(PROTECTED_SERVICES_PREFIX + req.params.id) || {});
+    policies[req.body.serviceName] = {
         protectionEnabled: req.body.protectionEnabled
-    });
+    };
+    await databaseClient.set(PROTECTED_SERVICES_PREFIX + req.params.id, policies);
     logger.trace("<< setPolicy :: 200 OK");
     return res.send();
 }

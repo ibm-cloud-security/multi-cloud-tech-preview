@@ -1,6 +1,13 @@
+const log4js = require('log4js');
+
+const logger = log4js.getLogger('database-client');
+logger.level = process.env['LOG_LEVEL'] || 'trace';
+
+
 class DatabaseClient {
 
     constructor() {
+        logger.debug('Instantiated Database Client');
         this.clusterData = {}
     }
 
