@@ -1,0 +1,1 @@
+Multi-Cloud Identity and Access Policy Manager Adapter installed successfully! 

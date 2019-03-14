@@ -1,0 +1,6 @@
+appid_url: "$MULTI_CLOUD_MANAGER_URL/api"
+appid_apikey: "m5pou9gyvw8psqlgnyi9a34fpgbndaidfgr9zs4r"
+cluster_name: "<Cluster 1 Name>"
+cluster_guid: "cluster_1_guid"
+cluster_location: "<Cluster 1 Location>"
+cluster_type: "<Cluster 1 Type>"

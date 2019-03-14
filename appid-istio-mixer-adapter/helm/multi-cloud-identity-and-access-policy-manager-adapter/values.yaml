@@ -1,0 +1,11 @@
+appName: ibmcloudappid
+
+replicaCount: 1
+image:
+  repository: antonal80/istio-adapter-ibmcloudappid
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 47304

@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dpl-{{ .Values.appName }}
+  namespace: istio-system
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+      annotations:
+        sidecar.istio.io/inject: "false"
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy}}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: transient-storage
+              mountPath: /volume
+          env:
+            - name: APPID_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: appid_url
+            - name: APPID_APIKEY
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: appid_apikey
+            - name: CLUSTER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: cluster_name
+            - name: CLUSTER_GUID
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: cluster_guid
+            - name: CLUSTER_LOCATION
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: cluster_location
+            - name: CLUSTER_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-{{ .Values.appName }}
+                  key: cluster_type
+      volumes:
+        - name: transient-storage
+          emptyDir: {}
