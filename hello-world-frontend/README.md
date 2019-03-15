@@ -85,7 +85,7 @@ This workaround is handled by the `./middleware/web-strategy-middleware`
 
 ### Configure your environment
 
-1. Modify template `./kubernetes/configmap.yaml` to include the following:
+1. Modify config template inside `./kubernetes/hello-world-frontend.yaml` to include the following:
 
     ```
     # Your App ID Credentials
@@ -101,25 +101,16 @@ This workaround is handled by the `./middleware/web-strategy-middleware`
     public_web_url: "http://158.48.115.235"
     ```
 
-### Configure Istio
+### Inject Istio sidecar and Deploy
 
 1. Enure your kubectl environment to use your second cluster 
-2. Navigate to `./kubernetes`
-3. Inject the Istio sidecar into your deployment
+2. Inject the Istio sidecar into your deployment
     ```
-    $ istioctl kube-inject -f deployment.yaml > istio-deployment.yaml
+    $ istioctl kube-inject -f ./kubernetes/hello-world-frontend.yaml | kubectl apply -f -
     ```
 
-### Deploy
+## Cleanup
 
 ```
-$ cd ./kubernetes
-$ kubectl apply -f namespace.yaml
-$ kubectl apply -f configmap.yaml 
-$ kubectl apply -f istio-deployment.yaml 
-$ kubectl apply -f service-api.yaml 
-$ kubectl apply -f service-web.yaml 
-$ kubectl apply -f istio-gateway.yaml
-$ kubectl apply -f istio-virtual-service.yaml
-$ kubectl apply -f istio-serviceentry.yaml
+$ kubectl delete -f ./kubernetes/hello-world-backend.yaml
 ```

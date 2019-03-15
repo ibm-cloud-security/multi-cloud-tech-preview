@@ -6,10 +6,9 @@ metadata:
   labels:
     app: multi-cloud-identity-and-access-policy-manager
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: http
-    nodePort: 32065
     port: 3001
   selector:
     app: multi-cloud-identity-and-access-policy-manager

@@ -30,21 +30,17 @@ Status: 404 OK
 Occurs when Istio API protection is disabled and no access token is provided to the endpoint
 ```
 
-## Configure
+## Configure and Deploy
 
 1. Enure your kubectl environment to use your second cluster 
-2. Navigate to `./kubernetes`
-3. Inject the Istio sidecar into your deployment
+2. Inject the Istio sidecar into your deployment
+    
     ```
-    $ istioctl kube-inject -f deployment.yaml > istio-deployment.yaml
+    $ istioctl kube-inject -f ./kubernetes/hello-world-backend.yaml | kubectl apply -f -
     ```
 
-## Deploy
+## Cleanup
 
 ```
-$ kubectl apply -f namespace.yaml 
-$ kubectl apply -f istio-deployment.yaml 
-$ kubectl apply -f service.yaml 
-$ kubectl apply -f istio-gateway-virtual-service.yaml
-$ kubectl apply -f istio-rule.yaml
+$ kubectl delete -f ./kubernetes/hello-world-backend.yaml
 ```

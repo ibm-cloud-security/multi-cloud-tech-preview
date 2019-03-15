@@ -1,0 +1,143 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multi-cloud-tech-preview
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfgmap-hello-world-frontend
+  namespace: multi-cloud-tech-preview
+data:
+  # TODO: Update config map here
+  tenant_id: "<App ID tenant id>"
+  client_id: "<App ID client id>"
+  secret: "<App ID secret>"
+  appid_url: "<App ID oauth server url>"
+  backend_url: "<Public URL to your backend application>"
+  public_web_url: "<Public URL to the frontend application>"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-hello-world-api
+  namespace: multi-cloud-tech-preview
+  labels:
+    app: hello-world-frontend
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 3000
+  selector:
+    app: hello-world-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-hello-world-web
+  namespace: multi-cloud-tech-preview
+  labels:
+    app: hello-world-frontend
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 3000
+  selector:
+    app: hello-world-frontend
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: gw-hello-world-frontend
+  namespace: multi-cloud-tech-preview
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      name: http
+      number: 80
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: vsvc-hello-world-frontend
+  namespace: multi-cloud-tech-preview
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - gw-hello-world-frontend
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        port:
+          number: 3000
+        host: svc-hello-world-api
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 3000
+        host: svc-hello-world-web
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dpl-hello-world-frontend
+  namespace: multi-cloud-tech-preview
+  labels:
+    app: hello-world-frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world-frontend
+    spec:
+      containers:
+      - name: hello-world-frontend
+        image: ibmcloudsecurity/multi-cloud-tech-preview-hello-world-frontend:latest
+        ports:
+        - containerPort: 3000
+        env:
+          - name: backend_url
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: backend_url
+          - name: public_web_url
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: public_web_url
+          - name: TENANT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: tenant_id
+          - name: CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: client_id
+          - name: SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: secret
+          - name: APPID_URL
+            valueFrom:
+              configMapKeyRef:
+                name: cfgmap-hello-world-frontend
+                key: appid_url

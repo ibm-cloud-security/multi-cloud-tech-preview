@@ -8,6 +8,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.ingress_host }}
+    secretName: {{ .Values.tls_cert_secret_name }}
   rules:
     - host: {{ .Values.ingress_host }}
       http:
