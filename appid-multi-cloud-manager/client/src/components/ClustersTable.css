@@ -1,0 +1,55 @@
+.ClustersTableContainer {
+    padding: 20px 30px 0 30px;
+}
+
+.ClustersTable {
+    width: 100%;
+    font-size: 14px;
+    border: 1px solid #DDDDDD;
+    border-collapse: collapse;
+}
+
+.ClustersTable td, .ClustersTable th {
+    padding: 10px 20px 10px 10px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.row-bg-light {
+    background-color: #FFFFFF;
+}
+
+.row-bg-dark {
+    background-color: #F4F4F4;
+}
+
+.switch-button {
+    width: 48px;
+}
+
+.switch-button:hover, .deleteButton:hover {
+    cursor: pointer;
+
+}
+
+.row-bottom-border td:not(:first-child) {
+    border-top: 1px solid #DDDDDD;
+    font-weight: bold;
+}
+
+.status-green {
+    color: green;
+}
+
+.status-yellow {
+    color: yellow;
+}
+
+.status-orange {
+    color: orange;
+}
+
+.status-red {
+    color: red;
+}
+  

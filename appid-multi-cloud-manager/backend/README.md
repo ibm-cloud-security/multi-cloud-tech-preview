@@ -1,1 +1,0 @@
-# appid-multi-cloud-manager
