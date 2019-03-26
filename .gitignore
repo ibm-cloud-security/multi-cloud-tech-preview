@@ -4,4 +4,4 @@ node_modules
 build
 pkg
 vendor
-appid-multi-cloud-manager/server/src/app/public/
+appid-multi-cloud-iam-manager/server/src/app/public/
