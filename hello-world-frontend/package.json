@@ -10,15 +10,12 @@
   "author": "Anton Aleksandrov",
   "license": "Apache-2.0",
   "dependencies": {
-    "cookie-parser": "^1.4.3",
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "ibmcloud-appid": "^5.0.0",
-    "jsonwebtoken": "^8.4.0",
     "log4js": "^3.0.6",
     "passport": "^0.4.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.6"
   }
 }
